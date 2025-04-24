@@ -1,0 +1,59 @@
+# Travel Management System
+
+travel_data = []
+
+def display_menu():
+    print("\n--- Travel Management System ---")
+    print("1. Book a Trip")
+    print("2. View Bookings")
+    print("3. Cancel a Booking")
+    print("4. Exit")
+
+def book_trip():
+    name = input("Enter your name: ")
+    destination = input("Enter destination: ")
+    days = input("Number of travel days: ")
+    booking = {
+        "Name": name,
+        "Destination": destination,
+        "Days": days
+    }
+    travel_data.append(booking)
+    print("✅ Booking confirmed!")
+
+def view_bookings():
+    if not travel_data:
+        print("No bookings found.")
+        return
+    print("\n--- Current Bookings ---")
+    for idx, booking in enumerate(travel_data, 1):
+        print(f"{idx}. {booking['Name']} -> {booking['Destination']} ({booking['Days']} days)")
+
+def cancel_booking():
+    view_bookings()
+    if not travel_data:
+        return
+    try:
+        choice = int(input("Enter booking number to cancel: "))
+        if 1 <= choice <= len(travel_data):
+            removed = travel_data.pop(choice - 1)
+            print(f"❌ Booking for {removed['Name']} to {removed['Destination']} cancelled.")
+        else:
+            print("Invalid booking number.")
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+
+while True:
+    display_menu()
+    option = input("Choose an option: ")
+    if option == '1':
+        book_trip()
+    elif option == '2':
+        view_bookings()
+    elif option == '3':
+        cancel_booking()
+    elif option == '4':
+        print("Goodbye!")
+        break
+    else:
+        print("Invalid choice. Try again.")
